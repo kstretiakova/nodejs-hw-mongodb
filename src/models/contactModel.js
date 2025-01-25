@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const contactSchema = new mongoose.Schema(
-{
+  {
     name: { type: String, required: true },
     phoneNumber: { type: String, required: true },
     email: { type: String, required: false },
@@ -9,10 +9,10 @@ const contactSchema = new mongoose.Schema(
     contactType: { type: String, required: true },
     createdAt: { type: Date, required: true },
     updatedAt: { type: Date, required: true },
-},
-{
+  },
+  {
     timestamps: false,
-},
+  },
 );
 
 const Contact = mongoose.model('Contact', contactSchema);

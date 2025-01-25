@@ -1,13 +1,13 @@
 import Contact from '../models/contactModel.js';
 
 export const findAllContacts = async () => {
-try {
+  try {
     console.log('Fetching all contacts...');
     const contacts = await Contact.find();
     console.log('Contacts fetched successfully:', contacts);
     return contacts;
-} catch (error) {
+  } catch (error) {
     console.error('Error in findAllContacts:', error);
     throw new Error('Error retrieving contacts: ' + error.message);
-}
+  }
 };
