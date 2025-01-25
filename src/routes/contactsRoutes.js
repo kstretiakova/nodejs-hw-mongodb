@@ -8,10 +8,10 @@ import {
 const router = express.Router();
 
 // отримати всі контакти
-router.get('/contacts', getContacts);
+router.get('/', getContacts);
 
 // отримати контакт по айді
-router.get('/contacts/:id', getContactById);
+router.get('/:id', getContactById);
 
 router.post('/', addContact);
 
