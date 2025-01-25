@@ -22,9 +22,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "fs": "^0.0.1-security",
     "http-errors": "^2.0.0",
     "mongoose": "^8.9.5",
+    "path": "^0.12.7",
     "pino": "^9.6.0",
-    "pino-http": "^10.4.0"
+    "pino-http": "^10.4.0",
+    "url": "^0.11.4"
   }
 }
