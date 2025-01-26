@@ -1,39 +1,29 @@
-import Contact from '../models/contactModel.js';
+import { findAllContacts, findContactById } from '../services/contacts.js';
 
-// отримання всіх контактів
-export const getContacts = async (req, res) => {
+
+export const getAllContacts = async (req, res, next) => {
   try {
-    const contacts = await Contact.find();
-
+    const contacts = await findAllContacts();
     res.status(200).json({
       status: 200,
-      message:
-        contacts.length > 0
-          ? 'Successfully found contacts!'
-          : 'No contacts found.',
+      message: 'Successfully found contacts!',
       data: contacts,
     });
   } catch (error) {
-    console.error('Error in getContacts:', error);
-    res.status(500).json({
-      status: 500,
-      message: 'Error retrieving contacts',
-      data: null,
-    });
+    next(error);
   }
 };
 
-// отримання контакту по id
-export const getContactById = async (req, res) => {
+
+export const getContactById = async (req, res, next) => {
   try {
-    const contactId = req.params.id;
-    const contact = await Contact.findById(contactId);
+    const { contactId } = req.params;
+    const contact = await findContactById(contactId);
 
     if (!contact) {
       return res.status(404).json({
         status: 404,
         message: 'Contact not found',
-        data: null,
       });
     }
 
@@ -43,66 +33,6 @@ export const getContactById = async (req, res) => {
       data: contact,
     });
   } catch (error) {
-    console.error('Error in getContactById:', error);
-    res.status(500).json({
-      status: 500,
-      message: 'Error retrieving contact',
-      data: null,
-    });
-  }
-};
-
-// додавання нового контакту
-export const addContact = async (req, res) => {
-  try {
-    const {
-      name,
-      phoneNumber,
-      email,
-      isFavourite,
-      contactType,
-      createdAt,
-      updatedAt,
-    } = req.body;
-
-    if (
-      !name ||
-      !phoneNumber ||
-      !contactType ||
-      isFavourite === undefined ||
-      !createdAt ||
-      !updatedAt
-    ) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Missing required fields',
-        data: null,
-      });
-    }
-
-    const newContact = new Contact({
-      name,
-      phoneNumber,
-      email,
-      isFavourite,
-      contactType,
-      createdAt,
-      updatedAt,
-    });
-
-    await newContact.save();
-
-    res.status(201).json({
-      status: 201,
-      message: 'Contact created successfully',
-      data: newContact,
-    });
-  } catch (error) {
-    console.error('Error in addContact:', error);
-    res.status(500).json({
-      status: 500,
-      message: 'Error adding contact',
-      data: null,
-    });
+    next(error);
   }
 };
