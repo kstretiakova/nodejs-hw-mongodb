@@ -25,6 +25,7 @@
     "fs": "^0.0.1-security",
     "http-errors": "^2.0.0",
     "mongoose": "^8.9.5",
+    "nanoid": "^5.0.9",
     "path": "^0.12.7",
     "pino": "^9.6.0",
     "pino-http": "^10.4.0",
