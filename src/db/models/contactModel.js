@@ -5,6 +5,8 @@ const contactSchema = new Schema(
     name: {
       type: String,
       required: [true, 'Name is required'],
+      minlength: 3,
+      maxlength: 20,
     },
     phoneNumber: {
       type: String,
