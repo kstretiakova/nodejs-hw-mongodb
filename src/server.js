@@ -19,13 +19,16 @@ app.use('/contacts', contactsRouter);
 
 app.use(errorHandler);
 
-mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    app.listen(process.env.PORT || 3000, () => {
-      console.log(`Server running on port ${process.env.PORT || 3000}`);
+
+export const setupServer = () => {
+  mongoose
+    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      app.listen(process.env.PORT || 3000, () => {
+        console.log(`Server running on port ${process.env.PORT || 3000}`);
+      });
+    })
+    .catch((error) => {
+      console.error('Database connection error:', error);
     });
-  })
-  .catch((error) => {
-    console.error('Database connection error:', error);
-  });
+};
