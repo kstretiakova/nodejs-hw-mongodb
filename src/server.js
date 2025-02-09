@@ -19,16 +19,16 @@ app.use('/contacts', contactsRouter);
 
 app.use(errorHandler);
 
+// Коректний MongoDB URI
+const mongoUri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_URL}/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
 
-export const setupServer = () => {
-  mongoose
-    .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-      app.listen(process.env.PORT || 3000, () => {
-        console.log(`Server running on port ${process.env.PORT || 3000}`);
-      });
-    })
-    .catch((error) => {
-      console.error('Database connection error:', error);
+mongoose
+  .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`Server running on port ${process.env.PORT || 3000}`);
     });
-};
+  })
+  .catch((error) => {
+    console.error('Database connection error:', error);
+  });
