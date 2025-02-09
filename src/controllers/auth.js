@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import createError from 'http-errors';
 import jwt from 'jsonwebtoken';
-import { UserCollection } from '../models/userModel.js';
-import { SessionCollection } from '../models/sessionModel.js';
+import { UserCollection } from '../db/models/userModel.js';
+import { SessionCollection } from '../db/models/sessionModel.js';
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
