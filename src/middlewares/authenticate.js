@@ -1,6 +1,6 @@
 import createError from 'http-errors';
 import jwt from 'jsonwebtoken';
-import { SessionCollection } from '../models/sessionModel.js';
+import { SessionCollection } from '../db/models/sessionModel.js';
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
