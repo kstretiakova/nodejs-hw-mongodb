@@ -1,16 +1,11 @@
+import createError from 'http-errors';
+
 export const errorHandler = (err, req, res, next) => {
-    const status = err.status || 500;
+  const status = err.status || 500;
+  const message = err.message || 'Internal Server Error';
 
-    let errorMessage = err.message;
-    if (err.name === 'ValidationError') {
-      errorMessage = Object.values(err.errors)
-        .map((e) => e.message)
-        .join(', ');
-    }
-
-    res.status(status).json({
-      status,
-      message: 'Something went wrong',
-      data: errorMessage,
-    });
-  };
+  res.status(status).json({
+    status,
+    message,
+  });
+};

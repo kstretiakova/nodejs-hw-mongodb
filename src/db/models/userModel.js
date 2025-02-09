@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const contactSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -11,12 +11,8 @@ const contactSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    phone: {
+    password: {
       type: String,
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
       required: true,
     },
   },
@@ -25,4 +21,4 @@ const contactSchema = new mongoose.Schema(
   }
 );
 
-export const ContactCollection = mongoose.model('Contact', contactSchema);
+export const UserCollection = mongoose.model('User', userSchema);

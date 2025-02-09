@@ -1,57 +1,49 @@
+import { ContactCollection } from '../models/contactModel.js';
 import createError from 'http-errors';
-import {
-  getAllContacts,
-  getContactById,
-  createContact,
-  updateContact,
-  deleteContact,
-} from '../services/contacts.js';
 
 export const getContacts = async (req, res) => {
-  const { page = 1, perPage = 10, sortBy = 'name', sortOrder = 'asc', type, isFavourite } = req.query;
-  const contactsData = await getAllContacts({ page, perPage, sortBy, sortOrder, type, isFavourite });
-
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully found contacts!',
-    data: contactsData,
-  });
+  const contacts = await ContactCollection.find({ userId: req.user.id });
+  res.status(200).json({ status: 200, data: contacts });
 };
 
-export const getSingleContact = async (req, res) => {
-  const { contactId } = req.params;
-  const contact = await getContactById(contactId);
-  if (!contact) throw createError(404, 'Contact not found');
-  res.status(200).json({
-    status: 200,
-    message: `Successfully found contact with id ${contactId}!`,
-    data: contact,
-  });
-};
+export const createContact = async (req, res) => {
+  const { name, email, phone } = req.body;
 
-export const createNewContact = async (req, res) => {
-  const contact = await createContact(req.body);
+  const newContact = await ContactCollection.create({
+    name,
+    email,
+    phone,
+    userId: req.user.id,
+  });
+
   res.status(201).json({
     status: 201,
-    message: 'Successfully created a contact!',
-    data: contact,
+    message: 'Contact created successfully!',
+    data: newContact,
   });
 };
 
-export const patchContact = async (req, res) => {
-  const { contactId } = req.params;
-  const updatedContact = await updateContact(contactId, req.body);
-  if (!updatedContact) throw createError(404, 'Contact not found');
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully patched a contact!',
-    data: updatedContact,
-  });
+export const updateContact = async (req, res) => {
+  const { id } = req.params;
+  const { name, email, phone } = req.body;
+
+  const contact = await ContactCollection.findOneAndUpdate(
+    { _id: id, userId: req.user.id },
+    { name, email, phone },
+    { new: true }
+  );
+
+  if (!contact) throw createError(404, 'Contact not found or unauthorized');
+
+  res.status(200).json({ status: 200, message: 'Contact updated!', data: contact });
 };
 
-export const removeContact = async (req, res) => {
-  const { contactId } = req.params;
-  const deletedContact = await deleteContact(contactId);
-  if (!deletedContact) throw createError(404, 'Contact not found');
+export const deleteContact = async (req, res) => {
+  const { id } = req.params;
+
+  const contact = await ContactCollection.findOneAndDelete({ _id: id, userId: req.user.id });
+
+  if (!contact) throw createError(404, 'Contact not found or unauthorized');
+
   res.status(204).send();
 };
