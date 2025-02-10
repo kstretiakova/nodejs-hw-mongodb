@@ -1,28 +1,35 @@
-import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const contactSchema = new mongoose.Schema(
+const contactSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'Name is required'],
+      minlength: 3,
+      maxlength: 20,
+    },
+    phoneNumber: {
+      type: String,
+      required: [true, 'Phone number is required'],
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+      validate: {
+        validator: (v) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v),
+        message: 'Invalid email format',
+      },
     },
-    phone: {
+    isFavourite: {
+      type: Boolean,
+      default: false,
+    },
+    contactType: {
       type: String,
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+      enum: ['work', 'home', 'personal'],
+      required: [true, 'Contact type is required'],
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-export const ContactCollection = mongoose.model('Contact', contactSchema);
+export const ContactCollection = model('Contact', contactSchema);
