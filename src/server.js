@@ -1,24 +1,18 @@
 import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { getEnvVar } from './utils/getEnvVar.js';
-import router from './routers/index.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import cookieParser from 'cookie-parser';
+import router from './routers/index.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
-console.log(PORT);
 
 export const startServer = () => {
   const app = express();
 
-  app.use(
-    express.json({
-      type: ['application/json', 'application/vnd.api+json'],
-      limit: '100kb',
-    }),
-  );
+  app.use(express.json());
   app.use(cors());
   app.use(cookieParser());
 
@@ -29,6 +23,13 @@ export const startServer = () => {
       },
     }),
   );
+
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Hello world!',
+    });
+  });
+
   app.use(router);
 
   app.use('*', notFoundHandler);
