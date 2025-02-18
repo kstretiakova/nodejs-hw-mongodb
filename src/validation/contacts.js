@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import JoiObjectId from 'joi-objectid';
 
-
+// Додаємо метод objectId до Joi
 Joi.objectId = JoiObjectId(Joi);
 
 export const createContactsSchema = Joi.object({
