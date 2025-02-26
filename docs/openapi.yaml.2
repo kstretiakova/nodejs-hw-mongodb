@@ -1,0 +1,289 @@
+openapi: 3.0.3
+info:
+  title: nodejs-hw
+  description: '# 🚀 contacts app API'
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: https://hw2-mongodb-41jp.onrender.com
+  - url: http://localhost:3000
+paths:
+  /contacts:
+    get:
+      tags:
+        - contacts
+      summary: Get contacts
+      description: |-
+        This is a GET request and it is used to "get" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).
+
+        A successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.
+      operationId: getContacts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: perPage
+          in: query
+          schema:
+            type: string
+            example: '5'
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            example: name
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+            example: desc
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - contacts
+      summary: add contact
+      description: |-
+        This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.
+
+        A successful POST request typically returns a `200 OK` or `201 Created` response code.
+      operationId: addContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contactType:
+                  type: string
+                  example: personal
+                email:
+                  type: string
+                  example: data@starfleet.mil
+                isFavourite:
+                  type: boolean
+                  example: false
+                name:
+                  type: string
+                  example: 01 contact to delete
+                phoneNumber:
+                  type: string
+                  example: '+380000000221'
+            examples:
+              add contact:
+                value:
+                  contactType: personal
+                  email: data@starfleet.mil
+                  isFavourite: false
+                  name: 01 contact to delete
+                  phoneNumber: '+380000000221'
+      responses:
+        '200':
+          description: ''
+  /contacts/{contactId}:
+    get:
+      tags:
+        - contacts
+      summary: Get Contact ById
+      description: |-
+        This is a GET request and it is used to "get" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).
+
+        A successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data.
+      operationId: getContactByid
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - contacts
+      summary: Delete data
+      description: |-
+        This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).
+
+        A successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code.
+      operationId: deleteData
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: ''
+    patch:
+      tags:
+        - contacts
+      summary: patch contact
+      description: patch contact
+      operationId: patchContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isFavourite:
+                  type: boolean
+                  example: true
+            examples:
+              patch contact:
+                value:
+                  isFavourite: true
+      responses:
+        '200':
+          description: ''
+    parameters:
+      - name: contactId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 6788c783f698181ca27c190b
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: /auth/register
+      description: /auth/register
+      operationId: authRegister
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: teacher01@mail.com
+                name:
+                  type: string
+                  example: Teacher01
+                password:
+                  type: string
+                  example: Pa$$w0rd
+            examples:
+              /auth/register:
+                value:
+                  email: teacher01@mail.com
+                  name: Teacher01
+                  password: Pa$$w0rd
+      responses:
+        '200':
+          description: ''
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: /auth/login
+      description: /auth/login
+      operationId: authLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@mail.com
+                password:
+                  type: string
+                  example: Pa$$w0rd
+            examples:
+              /auth/login:
+                value:
+                  email: user@mail.com
+                  password: Pa$$w0rd
+      responses:
+        '200':
+          description: ''
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: /auth/logout
+      description: /auth/logout
+      operationId: authLogout
+      responses:
+        '200':
+          description: ''
+  /auth/refresh:
+    post:
+      tags:
+        - auth
+      summary: /auth/refresh
+      description: /auth/refresh
+      operationId: authRefresh
+      responses:
+        '200':
+          description: ''
+  /auth/send-reset-email:
+    post:
+      tags:
+        - auth
+      summary: send-reset-email
+      description: send-reset-email
+      operationId: sendResetEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@mail.com
+            examples:
+              send-reset-email:
+                value:
+                  email: user@mail.com
+      responses:
+        '200':
+          description: ''
+  /auth/reset-pwd:
+    post:
+      tags:
+        - auth
+      summary: reset-pwd
+      description: reset-pwd
+      operationId: resetPwd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: Pa$$w0rd
+                token:
+                  type: string
+                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzhiZjgzZTE0ZDU1OTg1ZjA5MDBmNjAiLCJlbWFpbCI6ImR2YW5rZXZpY2hANXByby1zb2Z0d2FyZS5uZXQiLCJpYXQiOjE3MzcyMjkwOTMsImV4cCI6MTczNzIyOTk5M30.Eloifgrr6wRLAxLXaMunnbjlaR7QPrU89JVcp2AjZi0
+            examples:
+              reset-pwd:
+                value:
+                  password: Pa$$w0rd
+                  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzhiZjgzZTE0ZDU1OTg1ZjA5MDBmNjAiLCJlbWFpbCI6ImR2YW5rZXZpY2hANXByby1zb2Z0d2FyZS5uZXQiLCJpYXQiOjE3MzcyMjkwOTMsImV4cCI6MTczNzIyOTk5M30.Eloifgrr6wRLAxLXaMunnbjlaR7QPrU89JVcp2AjZi0
+      responses:
+        '200':
+          description: ''
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: contacts
+  - name: auth

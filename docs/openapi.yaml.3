@@ -1,0 +1,434 @@
+openapi: 3.0.0
+info:
+  title: flows Mitmproxy2Swagger
+  version: 1.0.0
+servers:
+- url: http://localhost:3000
+  description: The default server
+- url: https://hw2-mongodb-41jp.onrender.com
+  description: The default server
+paths:
+  /contacts:
+    get:
+      summary: GET contacts
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                            name:
+                              type: string
+                            phoneNumber:
+                              type: string
+                            email:
+                              type: string
+                            isFavourite:
+                              type: boolean
+                            contactType:
+                              type: string
+                            userId:
+                              type: string
+                            createdAt:
+                              type: string
+                            updatedAt:
+                              type: string
+                            photo:
+                              type: string
+                      page:
+                        type: number
+                      perPage:
+                        type: number
+                      totalItems:
+                        type: number
+                      totalPages:
+                        type: number
+                      hasNextPage:
+                        type: boolean
+                      hasPreviousPage:
+                        type: boolean
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: number
+      - name: perPage
+        in: query
+        required: false
+        schema:
+          type: number
+      - name: sortBy
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sortOrder
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+    post:
+      summary: POST contacts
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      phoneNumber:
+                        type: string
+                      isFavourite:
+                        type: boolean
+                      contactType:
+                        type: string
+                      userId:
+                        type: string
+                      photo:
+                        type: string
+                      _id:
+                        type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+      requestBody:
+        content:
+          null:
+            schema:
+              type: object
+              properties: {}
+  /auth/refresh:
+    post:
+      summary: POST refresh
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+  /auth/logout:
+    post:
+      summary: POST logout
+      responses:
+        '200':
+          description: OK
+          content: {}
+  /contacts/678d03237caf0cbb9bff:
+    get:
+      summary: GET 678d03237caf0cbb9bff
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+  /contacts/67912e31bee76beded2a7ff8:
+    delete:
+      summary: DELETE 67912e31bee76beded2a7ff8
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+  /contacts/97912e31bee76beded2a7ff8:
+    patch:
+      summary: PATCH 97912e31bee76beded2a7ff8
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+      requestBody:
+        content:
+          null:
+            schema:
+              type: object
+              properties: {}
+  /auth/login:
+    post:
+      summary: POST login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+  /contacts/678bf8af14d55985f0900f6e:
+    get:
+      summary: GET 678bf8af14d55985f0900f6e
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      phoneNumber:
+                        type: string
+                      email:
+                        type: string
+                      isFavourite:
+                        type: boolean
+                      contactType:
+                        type: string
+                      userId:
+                        type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      photo:
+                        type: string
+    patch:
+      summary: PATCH 678bf8af14d55985f0900f6e
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      name:
+                        type: string
+                      phoneNumber:
+                        type: string
+                      email:
+                        type: string
+                      isFavourite:
+                        type: boolean
+                      contactType:
+                        type: string
+                      userId:
+                        type: string
+                      createdAt:
+                        type: string
+                      updatedAt:
+                        type: string
+                      photo:
+                        type: string
+      requestBody:
+        content:
+          null:
+            schema:
+              type: object
+              properties: {}
+    delete:
+      summary: DELETE 678bf8af14d55985f0900f6e
+      responses:
+        '200':
+          description: OK
+          content: {}
+  /auth/send-reset-email:
+    post:
+      summary: POST send-reset-email
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+                  data:
+                    type: object
+                    properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+  /auth/reset-pwd:
+    post:
+      summary: POST reset-pwd
+      responses:
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+x-path-templates:
+# Remove the ignore: prefix to generate an endpoint with its URL
+# Lines that are closer to the top take precedence, the matching is greedy
+  []

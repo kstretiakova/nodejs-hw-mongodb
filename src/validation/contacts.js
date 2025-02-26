@@ -13,7 +13,7 @@ export const createContactsSchema = Joi.object({
     'string.max': 'Name must be at most 20 characters long',
   }),
   phoneNumber: Joi.string()
-    .pattern(/^\+\d{12}$/)
+    .pattern(/^\+\d{12}$/) // Формат +380000000000
     .required()
     .messages({
       'any.required': 'Phone number is required',
@@ -39,7 +39,7 @@ export const createContactsSchema = Joi.object({
 export const updateContactsSchema = Joi.object({
   name: Joi.string().min(3).max(20),
   phoneNumber: Joi.string()
-    .pattern(/^\+\d{12}$/)
+    .pattern(/^\+\d{12}$/) // Формат +380000000000
     .messages({
       'string.pattern.base': 'Phone number must be in the format +380000000000',
     }),
